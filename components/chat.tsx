@@ -55,7 +55,7 @@ export default function Chat() {
   const handleSetChat = async (chatId: string) => {
     try {
       if(messages.length>0){
-        const response = await axios.post('/api/handlesetlasmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100)});
+        const response = await axios.post('/api/handlesetlastmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100), messagelength: messages.length});
         console.log(response.data);
         if(!response.data.success) return;
       }
@@ -80,7 +80,7 @@ export default function Chat() {
   const handleCreateNewChat = async () => {
     try {
       if(messages.length<0) return;
-      const response = await axios.post('/api/handlesetlasmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100)});
+      const response = await axios.post('/api/handlesetlastmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100), messagelength: messages.length});
       console.log(response.data);
       if(!response.data.success) return;
       setMessages([]);
@@ -122,13 +122,13 @@ export default function Chat() {
               <option value="deepseek">Deepseek R1</option>
             </select>
           </div>
-          <ScrollArea ref={scrollRef} className="h-full px-12 pt-20 pb-5">
+          <ScrollArea ref={scrollRef} className="h-[75svh] px-12 pt-5 pb-5">
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full">
                 <h1 className="text-4xl font-bold text-foreground mb-8">What can I help with?</h1>
               </div>
             ) : (
-              <div className="space-y-6 py-8">
+              <div className="space-y-6 pt-2 pb-8">
                 {messages.map((message) => (
                   <div
                     key={message.id}

@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const { message, title } = await req.json();
+    const { message, title, messagelength } = await req.json();
 
     const chat = await client.chat.findFirst({
         where: {
@@ -22,6 +22,14 @@ export async function POST(req: Request) {
     });
 
     if(!chat) return;
+
+    const exisistingMessages = await client.message.findMany({
+      where: {
+        chatId: chat.id
+      }
+    });
+
+    if(messagelength === exisistingMessages.length) return NextResponse.json({ success: true });
 
     const messages = await client.message.create({
         data: {
