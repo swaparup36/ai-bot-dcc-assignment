@@ -54,9 +54,12 @@ export default function Chat() {
 
   const handleSetChat = async (chatId: string) => {
     try {
-      const response = await axios.post('/api/handlesetlasmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100)});
-      console.log(response.data);
-      if(!response.data.success) return;
+      if(messages.length>0){
+        const response = await axios.post('/api/handlesetlasmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100)});
+        console.log(response.data);
+        if(!response.data.success) return;
+      }
+      
       const msgs = await axios.post('/api/getmessagesbychat', {chatId});
       console.log(msgs.data);
       const chatMsgs = msgs.data.messages.map((msg: Message)=>{
@@ -76,6 +79,7 @@ export default function Chat() {
 
   const handleCreateNewChat = async () => {
     try {
+      if(messages.length<0) return;
       const response = await axios.post('/api/handlesetlasmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100)});
       console.log(response.data);
       if(!response.data.success) return;
