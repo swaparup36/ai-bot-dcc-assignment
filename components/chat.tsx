@@ -53,6 +53,7 @@ export default function Chat() {
   };
 
   const handleSetChat = async (chatId: string) => {
+    console.log(chatId)
     try {
       if(messages.length>0){
         const response = await axios.post('/api/handlesetlastmsg', {message: messages[messages.length-1], title: messages[0].content.slice(0, 100), messagelength: messages.length});
@@ -72,6 +73,7 @@ export default function Chat() {
         )
       })
       setMessages(chatMsgs);
+      getAllChats();
     } catch (error) {
       console.log("can't fetch all messages of this chats: ", error);
     }

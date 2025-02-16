@@ -3,6 +3,7 @@ import { google } from '@ai-sdk/google';
 import { streamText } from "ai";
 import { auth } from "@/lib/auth";
 import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server';
 
 const client = new PrismaClient();
 
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
     const user = await auth();
 
     if (!user) {
-      return new Response("Unauthorized", { status: 401 });
+      return NextResponse.json({ success: false, message: "chat not found" })
     }
 
     const { messages: chatMessages, aimodel } = await req.json();
@@ -23,6 +24,7 @@ export async function POST(req: Request) {
     });
 
     if(chatMessages.length === 1) {
+      console.log("length: 1");
       const chat = await client.chat.create({
         data: {
           userId: user.id,
@@ -40,6 +42,7 @@ export async function POST(req: Request) {
   
       return result.toDataStreamResponse();
     }else {
+      console.log("length: more than 1");
       const chat = await client.chat.findFirst({
         where: {
           title: chatMessages[0].content.slice(0, 100),
@@ -47,9 +50,16 @@ export async function POST(req: Request) {
         }
       });
 
-      if(!chat) return;
+      if(!chat) return NextResponse.json({ success: false, message: "chat not found" });
 
-      const messageToInsert = chatMessages.slice(chatMessages.length - 2, chatMessages.length);
+      const exisistingMessages = await client.message.findMany({
+        where: {
+          chatId: chat.id
+        }
+      })
+
+      const messageToInsert = chatMessages.slice(exisistingMessages.length, chatMessages.length);
+      console.log(messageToInsert);
       await client.message.createMany({
         data: messageToInsert.map((msg: any) => ({
           chatId: chat.id,

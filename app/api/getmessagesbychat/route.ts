@@ -16,6 +16,9 @@ export async function POST(req: NextRequest) {
     const messages = await client.message.findMany({
         where: {
             chatId: chatId
+        },
+        orderBy: {
+          createdAt: 'asc'
         }
     });
 

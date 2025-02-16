@@ -9,11 +9,11 @@ export async function POST(req: Request) {
     const user = await auth();
 
     if (!user) {
-      return new Response("Unauthorized", { status: 401 });
+      return NextResponse.json({ success: false, message: "user not found" });
     }
 
     const { message, title, messagelength } = await req.json();
-
+    console.log("chat title in set latest: ", title);
     const chat = await client.chat.findFirst({
         where: {
             title: title,
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         }
     });
 
-    if(!chat) return;
+    if(!chat) return NextResponse.json({ success: false, message: "chat not found" })
 
     const exisistingMessages = await client.message.findMany({
       where: {
@@ -29,8 +29,10 @@ export async function POST(req: Request) {
       }
     });
 
+    console.log(messagelength, exisistingMessages.length);
     if(messagelength === exisistingMessages.length) return NextResponse.json({ success: true });
 
+    console.log("setting latest msg...");
     const messages = await client.message.create({
         data: {
             chatId: chat.id,
