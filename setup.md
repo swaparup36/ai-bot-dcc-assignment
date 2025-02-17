@@ -1,6 +1,6 @@
-# Setup Guide for Chatbot DCC
+# Setup Guide for ChatbotPro
 
-This guide provides detailed instructions for setting up the Chatbot DCC project locally. Follow the steps below to get the project up and running on your machine.
+This guide provides detailed instructions for setting up the ChatbotPro project locally. Follow the steps below to get the project up and running on your machine.
 
 ## Prerequisites
 
