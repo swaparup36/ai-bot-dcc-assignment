@@ -18,7 +18,7 @@ ChatbotPro is an AI-powered chatbot application designed to provide helpful resp
 ## AI Models Available
 
 - **Gemini**: An advanced AI model for generating human-like text responses.
-- **GPT-4 Turbo**: A powerful AI model for natural language understanding and generation.
+- **Deepseek R1**: A powerful AI model for natural language understanding and generation.
 
 ## Features
 
