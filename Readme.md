@@ -1,6 +1,6 @@
-# Chatbot DCC
+# ChatbotPro
 
-Chatbot DCC is an AI-powered chatbot application designed to provide helpful responses and assist users with various tasks. The application leverages advanced AI models to deliver accurate and context-aware responses.
+ChatbotPro is an AI-powered chatbot application designed to provide helpful responses and assist users with various tasks. The application leverages advanced AI models to deliver accurate and context-aware responses.
 
 ## Technologies Used
 
@@ -18,7 +18,7 @@ Chatbot DCC is an AI-powered chatbot application designed to provide helpful res
 ## AI Models Available
 
 - **Gemini**: An advanced AI model for generating human-like text responses.
-- **GPT-4 Turbo**: A powerful AI model for natural language understanding and generation.
+- **Deepseek R1**: A powerful AI model for natural language understanding and generation.
 
 ## Features
 
